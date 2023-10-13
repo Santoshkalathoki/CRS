@@ -1,0 +1,22 @@
+<div class="sidebar scrollable-section" style="background-color: #999999">
+  <div class="sidebar-header">
+    <span style="margin-left: 2rem; font-size: 22px">MENU</span>
+  </div>
+  <div class="sidebar-nav ps-4" *ngIf="!isAdmin">
+    <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active"><span class="fa fa-house me-2"></span>Home</div>
+    <div class="mb-3" [routerLink]="['/post-grievance']" routerLinkActive="active" ><span class="fa fa-pen-to-square me-2"></span>Report a crime</div>
+    <div class="mb-3" [routerLink]="['/my-grievances']" routerLinkActive="active" ><span class="fa fa-layer-group me-2"></span>My Report</div>
+    <div class="mb-3" [routerLink]="['/account']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
+  </div>
+  <div class="sidebar-nav ps-4" *ngIf="isAdmin">
+    <div class="mb-3" [routerLink]="['/admin-dashboard']" routerLinkActive="active"><span class="fa fa-home me-2"></span>Dashboard</div>
+    <div class="mb-3" [routerLink]="['/users']" routerLinkActive="active"><span class="fa fa-users me-2"></span>Users</div>
+    <div class="mb-3" [routerLink]="['/dashboard']" routerLinkActive="active" ><span class="fa fa-layer-group me-2"></span>Pending Report</div>
+    <div class="mb-3" [routerLink]="['/user-approval-request']" routerLinkActive="active" ><span class="fa fa-user-plus me-2"></span>Approval Requests</div>
+    <div class="mb-3" [routerLink]="['/account']" routerLinkActive="active"><span class="fa fa-address-book me-2"></span>Account</div>
+  </div>
+  <!--<div class="d-flex align-content-end" style="top: 15rem">
+  </div>-->
+
+<!--  <div (click)="signOut()" style="cursor: pointer; position: absolute; top: 40rem"><i class="fa-solid fa-right-from-bracket me-2 ps-4"></i>Sign Out</div>-->
+</div>

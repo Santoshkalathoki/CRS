@@ -1,0 +1,53 @@
+<div class="top-bar navbar navbar-dark sticky-top shadow-sm" style="background-color: #999999">
+  <div class="col-md-3">
+    <div class="row">
+      <div class="col-md-6 d-flex align-content-center justify-content-end">
+        <span style="margin-top: 0.5rem">
+          <strong>Crime </strong>
+          <br>
+          <strong>Reporting </strong>
+          <strong>System </strong>
+<!--          <img src="../assets/crs.png" width="50px">-->
+<!--          <i class="fa-solid fa-bolt fa-2xl" style="color: #3d5af1"></i>-->
+        </span>
+      </div>
+      <div class="col-md-6 d-flex align-content-center">
+        <div style="margin-top: 0.4rem; margin-left: -1rem">
+          <!--<span>
+          <h4><strong>गुना<strong style="color: #3d5af1">सो</strong></strong></h4>
+&lt;!&ndash;          <h4><strong>Guna<strong style="color: #3d5af1">सो</strong></strong></h4>&ndash;&gt;
+&lt;!&ndash;          <h4><strong>Guna<strong style="color: #3d5af1">so</strong></strong></h4>&ndash;&gt;
+          </span>
+          <p style="margin-top: -0.5rem; font-size: 14px">Your Voice Matters !</p>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 d-flex justify-content-center">
+    <ng-container *ngIf="hasArticle">
+      <form [formGroup]="searchForm" (ngSubmit)="search()" class="w-50">
+        <input class="form-control"
+               style="background: #f3f3f3; margin-top: -1rem; border: none; font-family: 'Font Awesome 5 Free'"
+               type="text"
+               formControlName="searchKeyWord"
+               placeholder="Search for Complaints">
+      </form>
+    </ng-container>
+  </div>
+  <div class="col-md-3 text-start">
+      <div class="row" style="margin-left: 8rem" [routerLink]="['/account']">
+        <div class="col-md-4 text-end"><button class="border-0" style="border-radius: 100%; width: 50px; height: 50px; font-size: xx-large; background: #787d83; color: #202226"><strong>{{currentUser.charAt(0) | titlecase}}</strong></button></div>
+        <div class="col-md-8" style="margin-left: -10px; cursor: pointer">
+          <span style="color: #211414">
+            <ng-container *ngIf="isAdmin; else el">
+            <h5>ADMIN</h5>
+            </ng-container>
+            <ng-template #el>
+              <h5>USER</h5>
+            </ng-template>
+          </span>
+          <h6 class="text-capitalize" style="margin-top: -5px; color: #211414">{{currentUser}}</h6>
+        </div>
+      </div>
+  </div>
+</div>

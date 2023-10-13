@@ -1,0 +1,52 @@
+<div>
+  <app-top-bar [hasArticle]="false"></app-top-bar>
+</div>
+<div class="row" style="background: #fcfcfc">
+  <div class="col-md-2">
+    <app-side-bar></app-side-bar>
+  </div>
+  <div class="col-md-10 scrollable-section">
+    <div class="col-md-12 d-flex justify-content-center mt-5 mb-5"><h1><strong>Approval Requests</strong></h1></div>
+    <div class="card card-body mt-5 me-5 ms-4 shadow" style="border: none">
+      <h4><strong>Registered users</strong></h4>
+      <table class="table table-borderless table-hover">
+        <thead class="border-bottom">
+        <tr>
+          <th>S.N.</th>
+          <th>Name</th>
+          <th>E-mail</th>
+          <th class="d-flex justify-content-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let pendingUsers of approvalPendingUsers | paginate: {itemsPerPage: 10, currentPage: 1} ; let i = index">
+          <ng-container>
+            <td>{{((p - 1) * 10) + (i + 1)}}</td>
+            <td>{{pendingUsers.name}}</td>
+            <td>{{pendingUsers.email}}</td>
+            <td class="d-flex justify-content-center">
+              <button class="btn btn-primary me-3" style="background: #455be1" (click)="approveUser(pendingUsers.id)">Approve</button>
+            </td>
+          </ng-container>
+        </tr>
+        </tbody>
+      </table>
+      <ng-container *ngIf="approvalPendingUsers?.length === 0; else el">
+        <h6 class=" d-flex justify-content-center">No pending approval requests</h6>
+      </ng-container>
+      <ng-template class="row" #el>
+        <!--<div class="col-md-6">
+          Showing {{((p - 1) * 10) + (1)}} to {{((p - 1) * 10) + (articles.length % 10 === 0 ? 10 : articles.length - ((p - 1) * 10))}} of {{articles.length}} records
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex justify-content-end me-5">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>-->
+        <div class="d-flex justify-content-end me-5">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

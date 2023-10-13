@@ -1,0 +1,222 @@
+/*
+.main {
+  position: absolute;
+  background-color: #dedfe0;
+  opacity: 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-align: left;
+  font-size: 14px;
+  color: #000000;
+  font-family: Arial;
+  padding-left: 250px;
+  padding-top: 120px;
+}
+
+.login-card {
+  position: relative;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  width: 1050px;
+  height: 500px;
+}
+
+.picture-background-div {
+  position: relative;
+  top: 0;
+  left: 0;
+  border-radius: 10px 0px 0px 10px;
+  width: 450px;
+  height: 500px;
+  background-color:#99A2F37F;
+}
+
+.login-div {
+  position: relative;
+  top: 0;
+  right: 0;
+  border-radius: 0px 10px 10px 0px;
+  width: 600px;
+  height: 500px;
+}
+
+.welcome-text {
+  position: relative;
+  border: 0;
+  background-color: transparent;
+  font-family: Arial;
+  font-size: 14px;
+  top: 430px;
+  left: 5px;
+  color: #000000;
+  text-align: left;
+  width: 317px;
+}
+
+.login-text {
+  position: relative;
+  top: 110px;
+  left: 130px;
+  font-size: 24px;
+  font-weight: 600;
+  font-family: Arial;
+}
+
+.login-form {
+  position: relative;
+  top: 90px;
+  left: 60px;
+}
+
+.user-icon {
+  position: relative;
+  top: 35px;
+  left: 50px;
+}
+
+.email {
+  position: relative;
+  padding-left: 35px;
+  top: 35px;
+  left: 23px;
+  width: 400px;
+  height: 40px;
+  background-color: #dedfe0;
+  opacity: 65%;
+  border-radius: 50px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  color: #000000;
+}
+
+.password-icon {
+  position: absolute;
+  top: 97px;
+  left: 50px;
+}
+
+.password {
+  position: relative;
+  padding-left: 35px;
+  top: 45px;
+  left: 35px;
+  width: 400px;
+  height: 40px;
+  background-color: #dedfe0;
+  opacity: 65%;
+  border-radius: 50px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  color: #000000;
+}
+
+input {
+  padding-left: 20px;
+  border: 0;
+}
+
+.laptop-image {
+  position: relative;
+  top: -63px;
+  left: -12px;
+  width: 450px;
+  height: 500px;
+  border-radius: 10px 0px 0px 10px;
+  opacity: 50%;
+}
+
+.sign-up-forgot-password {
+  position: relative;
+  left: 120px;
+  top: 150px;
+  width: 450px;
+}
+
+.login-button {
+  position: absolute;
+  top: 330px;
+  left: 200px;
+  font-size: 18px;
+  font-family: Arial;
+  background-color: #385dc5;
+  width: 200px;
+  height: 35px;
+  border-radius: 50px;
+  border: 0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+  color: white;
+  font-weight: bold;
+}
+
+.login-button:hover {
+  background-color: #385dc5;
+  opacity: 80%;
+}
+
+.copyright {
+  position: relative;
+  top: 315px;
+  left: 10px;
+  color: black;
+  font-weight: lighter;
+  font-size: 10px;
+  width: 317px;
+}
+
+.logo {
+  position: relative;
+  top: -570px;
+  left: 10px;
+  width: 90px;
+  height: 100px;
+  opacity: 100%;
+}
+
+.background-image {
+  position: relative;
+  top: 0;
+  left: 0;
+  opacity: 10%;
+  width: 100%;
+  height: 100%;
+}
+
+.about-section {
+  position: relative;
+  top: 25px;
+  right: 50px;
+  color: black;
+  font-family: Arial;
+  font-weight: bolder;
+}
+*/
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
+
+.password-input {
+  position: relative;
+  width: 100%
+}
+
+.password-icon {
+  position: relative;
+  margin-top: -2rem;
+  margin-left: 90%;
+  opacity: 70%;
+}

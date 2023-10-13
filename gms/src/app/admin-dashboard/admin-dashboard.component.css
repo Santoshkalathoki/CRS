@@ -1,0 +1,34 @@
+.round:hover {
+  color: #fcfcfc;
+  background: #455be1;
+}
+
+.round {
+  border-radius: 10px;
+}
+
+.scrollable-section {
+  overflow: auto;
+  height: 90vh;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.approve-button {
+  background: none;
+  border: 1px solid #2db012;
+  color: #2db012;
+  border-radius: 25px;
+  height: 30px;
+  width: 100px;
+  margin-top: -0.2rem;
+}
+
+.approve-button:hover {
+  background: #2db012;
+  color: #ffffff;
+  border-radius: 25px;
+  height: 30px;
+  width: 100px;
+  margin-top: -0.2rem;
+}

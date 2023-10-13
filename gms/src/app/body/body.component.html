@@ -1,0 +1,289 @@
+<div class="row">
+  <div [ngClass]="hasPressed ? 'col-md-7 scrollable-section ps-5' : 'col-md-9 scrollable-section ps-5'">
+    <ng-container *ngIf="!isSearched; else el">
+      <div class="mt-5 mb-5" style="width: 100%; border: none; cursor: pointer" *ngFor="let article of articles; let i = index"
+           (click)="getRelatedArticles(article?.id, article?.title)" [ngbTooltip]="((article?.author === loggedInUserId) && !isAdmin) ? 'Your Article' : ''">
+        <div class="card card-body shadow card-main pe-5" [ngStyle]="{'background' : article?.id === relatedArticleId ? '#eceefd' : ''}">
+          <div class="row">
+            <div class="col-md-12 row">
+              <div class="align-content-center" [ngClass]=" isAdmin ? '' : 'col-md-1'">
+                <div class="ms-3">
+                  <div *ngIf="!isAdmin;">
+                    <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"
+                         [ngStyle]="{'transform' :  hasUpVoted[i] ? 'scale(1.85,1.6)' : 'scale(1.5,1.25)' }">
+                      <a class="fa fa-solid fa-arrow-up" style="text-decoration: none" (click)="upVote(article.id, $event)"
+                         [ngStyle]="{'color' :  hasUpVoted[i] ? '#3d5af1' : 'gray' }"></a>
+                    </div>
+                    <div class="d-flex justify-content-center mt-1 mb-1"><span style="font-size: 17px; font-weight: 600"
+                                                                               [ngStyle]="{'color' :  hasUpVoted[i] ? '#3d5af1' : (hasDownVoted[i] ? 'red' : 'gray') }">{{article?.vote}}</span></div>
+                    <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"
+                         [ngStyle]="{'transform' :  hasDownVoted[i] ? 'scale(1.85,1.6)' : 'scale(1.5,1.25)' }">
+                      <a class="fa fa-solid fa-arrow-down" style="text-decoration: none" (click)="downVote(article.id, $event)"
+                         [ngStyle]="{'color' :  hasDownVoted[i] ? 'red' : 'gray' }"></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div [ngClass]="isAdmin ? 'col-md-12 ms-3' : 'col-md-11'">
+                <div class="col-md-12 row">
+                  <div [ngClass]="isAdmin ? 'col-md-9' : 'col-md-11'">
+                    <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{article?.title}}</b></h4>
+                  </div>
+                  <div class="col-md-3 d-flex mt-1 justify-content-end" *ngIf="isAdmin">
+                    <div class="row">
+                      <div class="col-md-7 d-flex justify-content-end">
+                        <div>
+                        <span class="badge rounded-pill" style="transform: scale(1.3,1.3); border: 1px solid #3d5af1; color: #3d5af1;">
+                          <strong>{{article?.vote}} Votes</strong>
+                        </span>
+                        </div>
+                      </div>
+                      <div *ngIf="isAdmin" class="col-md-5">
+                        <button class="approve-button mb-3" ngbTooltip="Resolve Grievance"
+                                (click)="completeArticle(article?.id, $event)">
+                          <strong>Resolve</strong>
+                        </button>
+                      </div>
+                      <div class="d-flex justify-content-end">
+                        <button style="border: 1px solid #3d5af1; border-radius: 50%" ngbTooltip="Expand / Collapse"
+                                *ngIf="article?.content.length > 115">
+                          <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="article?.author === loggedInUserId && !isAdmin"
+                       class="col-md-1 d-flex justify-content-end">
+                    <div class="me-2">
+                      <span class="fa-solid fa-flag" style="color: #3d5af1"></span>
+                    </div>
+                    <div class="d-flex justify-content-end" *ngIf="article?.content.length > 115 && !isAdmin">
+                      <button style="border: 1px solid #3d5af1; border-radius: 50%; height: 25px" class="btn-sm" ngbTooltip="Expand / Collapse">
+                        <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <!--<div class="col-md-1 d-flex justify-content-end" *ngIf="article?.content.length > 115 && !isAdmin">
+                    <button style="border: 1px solid #3d5af1; border-radius: 50%; height: 25px" class="btn-sm" ngbTooltip="Expand / Collapse">
+                      <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                    </button>
+                  </div>-->
+                </div>
+                <div *ngIf="!isNotCollapsed[i] && article?.content.length > 115">
+                  <div class="row">
+                    <div class="col-md-11">
+                    <span class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">
+                      {{article?.content.substring(0, 115)}}
+                      <strong> ...</strong>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+                <ng-container>
+                  <div [ngbCollapse]="!isNotCollapsed[i] && article?.content.length > 115">
+                    <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{article?.content}}</p>
+                  </div>
+                </ng-container>
+                <!--            <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{article?.content}}</p>-->
+                <hr>
+                <div class="row">
+                  <div class="col-md-7" *ngIf="isAdmin && !article?.stay_anonymous">
+                    <strong style="color: #3d5af1">Reported By: </strong> <span>{{article?.author_name | titlecase}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <strong><span style="color: #3d5af1">Reported on</span>: </strong>{{article?.created_at | date : 'MMM dd, yyyy | hh:mm:ss a'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #el>
+      <div class="mt-5 mb-5" style="width: 100%; border: none; cursor: pointer" *ngFor="let article of filteredArticles; let i = index"
+           (click)="getRelatedArticles(article?.id, article?.title)">
+        <div class="card card-body shadow card-main pe-5" [ngStyle]="{'background' : article?.id === relatedArticleId ? '#eceefd' : ''}">
+          <div class="row">
+            <div class="col-md-12 row">
+              <div class="align-content-center" [ngClass]=" isAdmin ? '' : 'col-md-1'">
+                <div class="ms-3">
+                  <div *ngIf="!isAdmin;">
+                    <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"
+                         [ngStyle]="{'transform' :  hasUpVoted[i] ? 'scale(1.85,1.6)' : 'scale(1.5,1.25)' }">
+                      <a class="fa fa-solid fa-arrow-up" style="text-decoration: none" (click)="upVote(article.id, $event)"
+                         [ngStyle]="{'color' :  hasUpVoted[i] ? '#3d5af1' : 'gray' }"></a>
+                    </div>
+                    <div class="d-flex justify-content-center mt-1 mb-1"><span style="font-size: 17px; font-weight: 600"
+                                                                               [ngStyle]="{'color' :  hasUpVoted[i] ? '#3d5af1' : (hasDownVoted[i] ? 'red' : 'gray') }">{{article?.vote}}</span></div>
+                    <div class="d-flex justify-content-center" style="transform: scale(1.5,1.25)"
+                         [ngStyle]="{'transform' :  hasDownVoted[i] ? 'scale(1.85,1.6)' : 'scale(1.5,1.25)' }">
+                      <a class="fa fa-solid fa-arrow-down" style="text-decoration: none" (click)="downVote(article.id, $event)"
+                         [ngStyle]="{'color' :  hasDownVoted[i] ? 'red' : 'gray' }"></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div [ngClass]="isAdmin ? 'col-md-12 ms-3' : 'col-md-11'">
+                <div class="col-md-12 row">
+                  <div [ngClass]="isAdmin ? 'col-md-9' : 'col-md-11'">
+                    <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{article?.title}}</b></h4>
+                  </div>
+                  <div class="col-md-3 d-flex mt-1 justify-content-end" *ngIf="isAdmin">
+                    <div class="row">
+                      <div class="col-md-7 d-flex justify-content-end">
+                        <div>
+                        <span class="badge rounded-pill" style="transform: scale(1.3,1.3); border: 1px solid #3d5af1; color: #3d5af1;">
+                          <strong>{{article?.vote}} Votes</strong>
+                        </span>
+                        </div>
+                      </div>
+                      <div *ngIf="isAdmin" class="col-md-5">
+                        <button class="approve-button mb-3"
+                                (click)="completeArticle(article?.id, $event)">
+                          <strong>Approve</strong>
+                        </button>
+                      </div>
+                      <div class="d-flex justify-content-end">
+                        <button style="border: 1px solid #3d5af1; border-radius: 50%" ngbTooltip="Expand / Collapse"
+                                *ngIf="article?.content.length > 115">
+                          <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="article?.author === loggedInUserId && !isAdmin"
+                       class="col-md-1 d-flex justify-content-end">
+                    <div class="me-2">
+                      <span class="fa-solid fa-flag" ngbTooltip="Your Article" style="color: #3d5af1"></span>
+                    </div>
+                    <div class="d-flex justify-content-end" *ngIf="article?.content.length > 115 && !isAdmin">
+                      <button style="border: 1px solid #3d5af1; border-radius: 50%; height: 25px" class="btn-sm" ngbTooltip="Expand / Collapse">
+                        <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <!--<div class="col-md-1 d-flex justify-content-end" *ngIf="article?.content.length > 115 && !isAdmin">
+                    <button style="border: 1px solid #3d5af1; border-radius: 50%; height: 25px" class="btn-sm" ngbTooltip="Expand / Collapse">
+                      <span [ngClass]="!isNotCollapsed[i] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="collapse(i, $event)"></span>
+                    </button>
+                  </div>-->
+                </div>
+                <div *ngIf="!isNotCollapsed[i] && article?.content.length > 115">
+                  <div class="row">
+                    <div class="col-md-11">
+                    <span class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">
+                      {{article?.content.substring(0, 115)}}
+                      <strong> ...</strong>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+                <ng-container>
+                  <div [ngbCollapse]="!isNotCollapsed[i] && article?.content.length > 115">
+                    <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{article?.content}}</p>
+                  </div>
+                </ng-container>
+                <!--            <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{article?.content}}</p>-->
+                <hr>
+                <div class="row">
+                  <div class="col-md-7" *ngIf="isAdmin && !article?.stay_anonymous">
+                    <strong style="color: #3d5af1">Reported By: </strong> <span>{{article?.author_name | titlecase}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <strong><span style="color: #3d5af1">Reported on</span>: </strong>{{article?.created_at | date : 'MMM dd, yyyy | hh:mm:ss a'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!filteredArticles.length">
+        <div class="d-flex justify-content-center" style="margin-top: 10rem">
+          <div>
+            <h1>No such Report Found!!!</h1>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button
+          class="btn btn-outline-primary  mt-5 mb-4"
+          style="width: 15%; border-color: #3d5af1;"
+          (click)="seeAll()">See All Report</button>
+      </div>
+    </ng-template>
+  </div>
+
+  <div [ngClass]="hasPressed ? 'col-md-5 scrollable-section ps-5' : 'col-md-3 scrollable-section'">
+    <div class="d-flex justify-content-center" *ngIf="!isAdmin">
+      <button class="btn btn-primary mt-5 mb-4" style="width: 70%; background: #3d5af1;" [routerLink]="['/post-grievance']">+ Report a crime</button>
+    </div>
+    <div class="card shadow p-3 d-flex justify-content-center me-3" *ngIf="hasPressed" style="border: none"
+    [ngStyle]=" {'margin-top' : isAdmin ? '5rem' : ''} ">
+      <div class="row">
+        <div style="text-align: justify" class="col-md-10">
+          <h6 style="text-align: justify">Report similar to <b>{{relatedArticles[relatedArticles.length - 1]}}</b></h6>
+        </div>
+        <div style="text-align: end; cursor: pointer" class="col-md-2">
+          <span (click)="close()" class="text-danger">close</span>
+        </div>
+      </div>
+      <div class="card-body scrollable-section-similar-article">
+        <div *ngFor="let similar of relatedArticles; let l = last; let ii = index">
+          <div class="card card-body shadow mb-4" *ngIf="!l" style="background: #eceefd">
+            <div class="card-body row">
+              <div class="col-md-12">
+                <div class="pe-5">
+                  <div class="col-md-11 row" style="margin-top: -1rem">
+                    <div class="col-md-10">
+                      <h4 class="card-title mb-3" style="font-family: 'poppins', sans-serif; color: #4f4d4d"><b>{{similar?.title}}</b></h4>
+                    </div>
+                    <div class="col-md-2 custom">
+                      <div class="d-flex justify-content-end">
+                        <div class="pe-2">
+                            <span class="badge rounded-pill" style="transform: scale(1.3,1.3); border: 1px solid #3d5af1; color: #3d5af1;">
+                              <strong>{{similar?.vote}} Votes</strong>
+                            </span>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-end mt-3">
+                        <button style="border: 1px solid #3d5af1; border-radius: 50%; background-color: #ffffff" ngbTooltip="Expand / Collapse"
+                                *ngIf="similar?.content.length > 115">
+                          <span [ngClass]="!isNotCollapsedSimilar[ii] ? 'fa fa-solid fa-angle-down' : 'fa fa-solid fa-angle-up'" style="color: #3d5af1" (click)="similarCollapse(ii, $event)"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="!isNotCollapsedSimilar[ii] && similar?.content.length > 50">
+                    <div class="row">
+                      <div class="col-md-11">
+                    <span class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">
+                      {{similar?.content.substring(0, 50)}}
+                      <strong> ...</strong>
+                    </span>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-container>
+                    <div [ngbCollapse]="!isNotCollapsedSimilar[ii] && similar?.content.length > 115">
+                      <p class="card-text" style="font-family: 'poppins', sans-serif; color: #4f4d4d; font-size: 18px; text-align: justify">{{similar?.content}}</p>
+                    </div>
+                  </ng-container>
+                </div>
+                <hr>
+                <div>
+                  <strong><span style="color: #3d5af1">Reported on</span>: </strong>{{similar?.created_at | date : 'MMM dd, yyyy | hh:mm:ss a'}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner>
+  <app-spinner></app-spinner>
+</ngx-spinner>

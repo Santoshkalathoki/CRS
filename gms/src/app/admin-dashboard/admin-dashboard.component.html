@@ -1,0 +1,131 @@
+<div>
+  <app-top-bar [hasArticle]="false"></app-top-bar>
+</div>
+<div class="row" style="background: #fcfcfc">
+  <div class="col-md-2">
+    <app-side-bar></app-side-bar>
+  </div>
+  <div class="col-md-10 scrollable-section" style="font-family: 'Poppins', sans-serif">
+    <div class="row col-md-12 mt-5 mb-4">
+      <div class="col-md-4" [routerLink]="['/dashboard']">
+        <div class="card card-body round me-5 ms-4 shadow" style="border: none">
+          <div class="row">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-solid fa-layer-group fa-2xl"></i>
+            </div>
+            <div class="col-md-10">
+              <div><h1><strong>{{articlesCount}}</strong></h1></div>
+              <div><h6><strong>Pending Reports</strong></h6></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" [routerLink]="['/users']">
+        <div class="card card-body round me-5 ms-4 shadow-lg" style="border: none">
+          <div class="row">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-solid fa-users fa-2xl"></i>
+            </div>
+            <div class="col-md-10">
+              <div><h1><strong>{{totalUsersCount}}</strong></h1></div>
+              <div><h6><strong>Total Users</strong></h6></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" [routerLink]="['/user-approval-request']">
+        <div class="card card-body shadow round me-5 ms-4" style="border: none">
+          <div class="row">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-solid fa-user-plus fa-2xl"></i>
+            </div>
+            <div class="col-md-10">
+              <div><h1><strong>{{pendingUsersCount}}</strong></h1></div>
+              <div><h6><strong>New Request</strong></h6></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pe-4">
+      <div class="card card-body shadow ms-4 me-5" style="border: none">
+        <h5><strong>All Reports</strong></h5>
+        <table class="table table-borderless table-hover">
+          <thead class="border-bottom">
+            <tr>
+              <th>S.N.</th>
+              <th>Title</th>
+              <th>Reported By</th>
+              <th>Created Date</th>
+              <th>Vote</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let article of articles | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+              (click)="openModel(articleDetail, article.title, article.content, article.is_completed, article.id)">
+            <ng-container>
+              <td>{{((p - 1) * 10) + (i + 1)}}</td>
+              <td>{{article.title}}</td>
+              <td>
+                <ng-container *ngIf="article?.stay_anonymous; else els">
+<!--                  <span class="fa fa-solid fa-eye-slash"></span>-->
+                  <span style="color: red">Anonymous</span>
+                </ng-container>
+                <ng-template #els>
+                  {{article?.author_name}}
+                </ng-template>
+              </td>
+              <td>{{article.created_at | date:'MMM dd, yyyy | hh:mm:ss a'}}</td>
+              <td>{{article.vote}}</td>
+              <td [ngStyle]="{ 'color' : article.is_completed ? 'green' : '#3d5af1' }"><strong>{{article.is_completed ? 'Completed' : 'Pending'}}</strong></td>
+            </ng-container>
+          </tr>
+          </tbody>
+        </table>
+        <div class="row">
+        <div class="col-md-6">
+            Showing {{((p - 1) * 10) + (1)}} to {{((p - 1) * 10) + (articles.length % 10 === 0 ? 10 : articles.length - ((p - 1) * 10))}} of {{articles.length}} records
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex justify-content-end me-5">
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #articleDetail>
+      <div class="modal-content pb-3 pe-3">
+        <div class="modal-header" style="display:block">
+          <div (click)="close()" class=" d-flex justify-content-end mb-2">
+            <span style="color: red; cursor: pointer; margin-top: -0.5rem">
+              close
+            </span>
+          </div>
+          <div class="row col-md-12">
+            <div class="col-md-11">
+              <h5>{{openedArticleTitle}}</h5>
+            </div>
+            <div class="col-md-1">
+              <span class="badge rounded-pill" [ngStyle]=" {'background-color': openedArticleStatus === 'Completed' ? '#008000' : '#6677ce'} ">
+                    <strong>{{openedArticleStatus}}</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <p class="py-4" style="text-align: justify">
+            {{openedArticleContent}}
+          </p>
+        </div>
+        <div class="d-flex justify-content-end" *ngIf="openedArticleStatus === 'Pending'">
+          <button class="approve-button" (click)="completeArticle(openedArticleId)">Resolve</button>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</div>

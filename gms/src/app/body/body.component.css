@@ -1,0 +1,95 @@
+.card-main:hover {
+  animation-duration: 0.3s;
+  animation-name: scaleAnimation;
+  animation-fill-mode: forwards;
+}
+
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1,1);
+  }
+  100% {
+    transform: scale(1.02,1.02);
+  }
+}
+
+.scrollable-section {
+  overflow: auto;
+  height: 91vh;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollable-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-section::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.scrollable-section::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrollable-section-similar-article {
+  overflow: auto;
+  height: 70vh;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollable-section-similar-article::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-section-similar-article::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.scrollable-section-similar-article::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+
+.custom {
+  position: absolute;
+  right: 0;
+}
+
+.col-md-zeroPointFive{
+  flex:0 0 auto;
+  width:3%
+}
+
+.col-md-elevenPointFive{
+  flex:0 0 auto;
+  width:97%
+}
+
+.approve-button {
+  background: none;
+  border: 1px solid #2db012;
+  color: #2db012;
+  border-radius: 100px;
+  height: 30px;
+  width: 100px;
+  margin-top: -0.2rem;
+}
+
+.approve-button:hover {
+  background: #2db012;
+  color: #ffffff;
+  border-radius: 100px;
+  height: 30px;
+  width: 100px;
+  margin-top: -0.2rem;
+}
+
+.highlight {
+  background-color: yellow;
+}
+
+.btn-outline-primary:hover {
+  background-color: #3d5af1;
+}

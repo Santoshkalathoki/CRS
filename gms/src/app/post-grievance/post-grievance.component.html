@@ -1,0 +1,77 @@
+<div>
+  <app-top-bar [hasArticle]="false"></app-top-bar>
+</div>
+<div class="row" style="background: #fcfcfc">
+  <div class="col-md-2">
+    <app-side-bar></app-side-bar>
+  </div>
+  <div class="col-md-10 scrollable-section">
+    <div class="col-md-8 h-100 offset-xl-1 mt-5">
+      <div class="card card-body border-0 shadow">
+        <form [formGroup]="postGrievance" (ngSubmit)="submit()">
+          <h1 style="border-bottom: 2px solid #8899f3;"><strong>Report a crime</strong></h1>
+          <!--<div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+            <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-facebook-f"></i>
+            </button>
+
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-twitter"></i>
+            </button>
+
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-linkedin-in"></i>
+            </button>
+          </div>
+
+          <div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0">Or</p>
+          </div>-->
+
+          <div class="d-flex justify-content-end mt-3">
+            <label for="anonymous" class="me-2"><strong>Stay Anonymous to Admin: </strong></label>
+            <label class="switch">
+              <input type="checkbox" id="anonymous" formControlName="stayAnonymous">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="form-outline mb-4">
+            <label class="form-label mb-1"><strong>Title</strong></label>
+            <input type="text" class="form-control form-control-lg"
+                   [ngClass]="{'is-invalid' : isSubmitted && postGrievance.controls['title'].errors}"
+                   formControlName="title"
+                   placeholder="Enter a title"/>
+            <div *ngIf="isSubmitted && postGrievance.controls['title'].errors" class="text-danger">
+              <div *ngIf="isSubmitted && postGrievance.controls['title'].errors['required']">
+                Title is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-outline mb-4">
+            <label class="form-label mb-1" for="form3Example3"><strong>Description</strong></label>
+            <textarea id="form3Example3" class="form-control form-control-lg"
+                      [ngClass]="{'is-invalid' : isSubmitted && postGrievance.controls['description'].errors}"
+                      style="width: 100%; height: 3in;"
+                      formControlName="description"
+                      placeholder="Enter the description of Report">
+          </textarea>
+            <div *ngIf="isSubmitted && postGrievance.controls['description'].errors" class="text-danger">
+              <div *ngIf="isSubmitted && postGrievance.controls['description'].errors['required']">
+                Description is required
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem; background: #3d5af1">Post</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

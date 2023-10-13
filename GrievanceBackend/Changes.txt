@@ -1,0 +1,12 @@
+2023-jun-9      -voted_by field updated to upvoted_by and downvoted_by
+                -is_completed field is added and if is_completed field is True, article is filtered out in http://127.0.0.1:8000/api/articles/completed-articles/
+                -author_name field is added in article
+                -Delete API is updated
+
+2023-June-19    -Forgot Password Api is created(no-reply.gms@outlook.com is created with password Grievancemgmt123 )
+                -spaCy NLP is used
+
+
+2023-July-10    -List All article Api created
+                -Incomplete Article Created
+                -Upvote and Downvote Api updated (If user upvote same article twice it will undo to initial state and similar to downvote API)
